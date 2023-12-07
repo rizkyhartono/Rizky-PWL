@@ -17,6 +17,19 @@
                     </x-nav-link>
                 </div>
             </div>
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('book')" :active="request()->routeIs('Book')">
+                        {{ __('Books') }}
+                    </x-nav-link>
+                </div>
+            </div>
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('book')" :active="request()->routeIs('book.create')">
+                        {{ __('Book') }}
+                    </x-nav-link>
+                </div>
+            </div>
+
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

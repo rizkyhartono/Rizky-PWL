@@ -16,7 +16,7 @@ class PustakawanSeeder extends Seeder
     public function run(): void
     {
         $user = User::create([
-            'name' => 'Pustakawan',
+            'name' => 'Pustakawans',
             'email' => 'pustakawan@gmail.com',
             'email_verifiend_at' => now(),
             'password' => Hash::make('password'),
