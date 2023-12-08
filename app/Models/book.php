@@ -9,13 +9,8 @@ class book extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
-        'title',
-        'author',
-        'year',
-        'city',
-        'quantity',
-        'bookshelf_id',
-        'cover',
-    ];
+    public function bookshelf(): BelongsTo
+    {
+        return $this->belongsTo(Bookshelf::class);
+    }
 }

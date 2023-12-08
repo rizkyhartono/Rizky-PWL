@@ -13,14 +13,74 @@ class BookController extends Controller
         $data['books'] = Book::with('bookshelf')->get();
         return view('books.index', $data);
     }
-    public function create()
+
+    public function create(){
+        return view('bookshelves.create');
+}
+
+public function destroy(string $id)
+{
+    $book = $Book::findOrFail($id);
+
+    Storage::delete('public/cover_buku/'.$book->cover);
+    $book->delete();
+    $notification = array(
+        'message' => 'Data buku berhasil dihapus',
+        'alert-type' => 'succes'
+    );
+    return redirect()->route('book')->with($notification);
+}
+
+    public function edit(string $id)
     {
-        // Mungkin Anda perlu menyediakan data seperti bookshelves untuk dipass ke view
+        $data['book'] = Book::find($id);
         $data['bookshelves'] = Bookshelf::pluck('name', 'id');
-        return view('books.create', ['bookshelves' => $bookshelves]);
+
+        return view('books.edit', $data);
     }
+
+    public function update(Request $request, string $id){
+
+        $book = Book::find($id);
+
+        
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'name' => 'required|max:150',
+            'year' => 
+            'required|digits:4|integer|min:1900|max:'.(date('Y')),
+            'publisher' => 'required|max:100',
+            'city' => 'required|numeric',
+            'bookshelf_id' => 'required',
+            'cover' => 'nullable|image',
+
+        ]);
+       
+        if ($request->hasFile('cover')){
+            if($book->cover != null){
+                Storage::delete('public/cover_buku/'.$request->old_cover);
+            }
+
+            $path =$request->file('cover')->storeAs(
+                'public/cover_buku',
+                'cover_buku'.time().'.'. $request->file('cover')->extension()
+            );
+            $validated['cover'] = basename($path);
+        }
+        Book::where('id', $id)
+        ->update($validated);
+
+        $notification = array(
+            'message' => 'Data buku berhasil diperbaharui',
+            'alert-type' => 'succes'
+        );
+
+        return redirect()->route('book')->with($notification);
+
+    }
+
     public function store(Request $request){
-        // dd($request->file('image'));
+       
         $validated = $request->validate([
             'title' => 'required|max:255',
             'name' => 'required|max:150',
@@ -41,12 +101,12 @@ class BookController extends Controller
             $validated['cover'] = basename($path);
         }
 
-        Bookshelf::create($validated);
+        Book::create($validated);
 
-        $notification = [
+        $notification = array(
             'message' => 'Data buku berhasil ditambahkan',
-            'alert-type' => 'success'
-        ];
+            'alert-type' =>'succes'
+        );
         if($request->save == true){
             return redirect()->route('book')->with($notification);
 
