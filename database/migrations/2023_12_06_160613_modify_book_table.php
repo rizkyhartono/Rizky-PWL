@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('books', function (Blueprint $table) {
             $table->integer('quantity')->after('cover');
-            $table->string('authot', 150)->change();
+            $table->string('authot', 150)->nullable()->change();
             $table->string('publisher', 100)->change();
             $table->string('city', 75)->change();
         });

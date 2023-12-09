@@ -1,20 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Book') }}
+            {{ __('Books') }}
         </h2>
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflowhidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray100">
-                <x-secondary-button tag="a" href="{{ route('book.create') }}">Tambah Data Buku</x-secondary-button>
-
-                    
+                     <x-primary-button tag="a" href="{{route('book.create')}}">Tambah Data Buku</x-primary-button>
+                    <x-primary-button tag="a" href="{{route('book.create')}}"> Edit Buku</x-primary-button>
+                    <x-primary-button tag="a" href="{{route('book.create')}}"> Hapus Buku</x-primary-button>
+                    <x-primary-button tag="a" href="{{route('book.create')}}"> Update</x-primary-button>
                     <br /><br />
-                    <!--content here -->
-                    
-
                     <x-table>
                         <x-slot name="header">
                             <tr>
@@ -27,7 +25,7 @@
                                 <th>Cover</th>
                                 <th>Kuantitas</th>
                                 <th>Kode Rak</th>
-                                 <th>Aksi</th> 
+                                {{-- <th>Aksi</th> --}}
                             </tr>
                         </x-slot>
                         @php $num=1; @endphp
@@ -44,11 +42,11 @@
                             </td>
                             <td>{{ $book->quantity }}</td>
                             <td>{{ $book->bookshelf->code }}-{{ $book->bookshelf->name }}</td>
-                             <td>
+                            {{-- <td>
                                 <x-primary-button tag="a" href="{{route('book.edit', $book->id)}}">Edit
                                 </x-primary-button>
-                            </td> 
-                             <x-danger-button x-data=""
+                            </td> --}}
+                           <x-danger-button x-data=""
                                 x-on:click.prevent="$dispatch('open-modal', 'confirm-book-deletion')"
                                 x-on:click="$dispatch('set-action', '{{route('book.destroy', $book->id) }}')">{{
                                 __('Delete') }}</x-danger-button> 

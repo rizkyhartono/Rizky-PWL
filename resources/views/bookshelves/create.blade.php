@@ -9,7 +9,7 @@
             <div class="bg-white dark:bg-gray-800 overflowhidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray100">
                     <!-- CONTENT HERE -->
-                    <!-- <form method="post" action="{{ route('bookshelf.store') }}" class="mt-6 space-y-6" enctype="multipart/form-data"> -->
+                    <form method="post" action="{{ route('bookshelf.store') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
                         @csrf
                         <div class="max-w-xl">
                             <x-input-label for="code" value="Code Bookshelf" />

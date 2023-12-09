@@ -13,14 +13,17 @@ class BookController extends Controller
         $data['books'] = Book::with('bookshelf')->get();
         return view('books.index', $data);
     }
-
-    public function create(){
-        return view('bookshelves.create');
+    public function create()
+{
+    $data['bookshelves'] = Bookshelf::pluck('name', 'id');
+    return view('books.create', $data);
 }
+
 
 public function destroy(string $id)
 {
-    $book = $Book::findOrFail($id);
+    $book = Book::findOrFail($id);
+
 
     Storage::delete('public/cover_buku/'.$book->cover);
     $book->delete();
@@ -105,7 +108,8 @@ public function destroy(string $id)
 
         $notification = array(
             'message' => 'Data buku berhasil ditambahkan',
-            'alert-type' =>'succes'
+            'alert-type' => 'success'
+
         );
         if($request->save == true){
             return redirect()->route('book')->with($notification);
